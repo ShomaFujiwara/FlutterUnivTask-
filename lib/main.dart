@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+/// ファイル名は expanded_text.dart のようなスネークケースがよい
+/// 参考：https://dart.dev/guides/language/effective-dart/style#do-name-libraries-and-source-files-using-lowercase_with_underscores
 import 'expandedText.dart';
 
 void main() => runApp(const MyApp());
@@ -219,8 +222,7 @@ class _ViewPageState extends State<ViewPage> {
         Row(
           children: [
             IconButton(
-                onPressed: () => {
-                }, icon: const Icon(Icons.favorite_border)),
+                onPressed: () => {}, icon: const Icon(Icons.favorite_border)),
             IconButton(
                 onPressed: () => {},
                 icon: SizedBox(
