@@ -270,10 +270,11 @@ class Users extends StatelessWidget {
   }) : super(key: key);
 
   final String user, page;
+  static const radiusSize = 30;
   @override
   Widget build(BuildContext context) {
-    double radiusSize = 30;
-    if (page == "home") radiusSize = 13;
+    /// 三項演算子を使うとよりスッキリかけます。
+    final radiusSize = page == "home" ? 13.0 : 30.0;
     return Stack(children: [
       Padding(
         padding: const EdgeInsets.all(5.0),
