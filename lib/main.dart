@@ -270,7 +270,6 @@ class Users extends StatelessWidget {
   }) : super(key: key);
 
   final String user, page;
-  static const radiusSize = 30;
   @override
   Widget build(BuildContext context) {
     /// 三項演算子を使うとよりスッキリかけます。
