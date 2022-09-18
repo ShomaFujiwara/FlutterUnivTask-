@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+/// ファイル名は expanded_text.dart のようなスネークケースがよい
+/// 参考：https://dart.dev/guides/language/effective-dart/style#do-name-libraries-and-source-files-using-lowercase_with_underscores
 import 'expandedText.dart';
 
 void main() => runApp(const MyApp());
@@ -85,12 +88,30 @@ class _MyAppState extends State<MyApp> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: const [
-                      Users('honer', 'story'),
-                      Users('guests', 'story'),
-                      Users('guests', 'story'),
-                      Users('guests', 'story'),
-                      Users('guests', 'story'),
-                      Users('guests', 'story'),
+                      Users(
+                        userType: UserType.honer,
+                        pageType: PageType.story,
+                      ),
+                      Users(
+                        userType: UserType.guests,
+                        pageType: PageType.story,
+                      ),
+                      Users(
+                        userType: UserType.guests,
+                        pageType: PageType.story,
+                      ),
+                      Users(
+                        userType: UserType.guests,
+                        pageType: PageType.story,
+                      ),
+                      Users(
+                        userType: UserType.guests,
+                        pageType: PageType.story,
+                      ),
+                      Users(
+                        userType: UserType.guests,
+                        pageType: PageType.story,
+                      ),
                     ],
                   ),
                 ),
@@ -192,7 +213,12 @@ class _ViewPageState extends State<ViewPage> {
         Stack(
           children: [
             const Align(
-                alignment: Alignment.topLeft, child: Users('guests', 'home')),
+              alignment: Alignment.topLeft,
+              child: Users(
+                userType: UserType.guests,
+                pageType: PageType.home,
+              ),
+            ),
             Align(
               alignment: const Alignment(-0.8, -1),
               child: TextButton(
@@ -219,8 +245,7 @@ class _ViewPageState extends State<ViewPage> {
         Row(
           children: [
             IconButton(
-                onPressed: () => {
-                }, icon: const Icon(Icons.favorite_border)),
+                onPressed: () => {}, icon: const Icon(Icons.favorite_border)),
             IconButton(
                 onPressed: () => {},
                 icon: SizedBox(
@@ -259,19 +284,31 @@ class _ViewPageState extends State<ViewPage> {
 ///_______________________________________________________
 //ユーザーアイコン画面widget
 
-class Users extends StatelessWidget {
-  const Users(
-    this.user,
-    this.page, //honer home storys でサイズを分ける
-    {
-    Key? key,
-  }) : super(key: key);
+/// 表示形式をわけるだけなら enum をつかって分岐させるとよりスマートです。
 
-  final String user, page;
+enum UserType {
+  honer,
+  guests,
+}
+
+enum PageType {
+  home,
+  story,
+}
+
+class Users extends StatelessWidget {
+  const Users({
+    super.key,
+    required this.userType,
+    required this.pageType,
+  });
+  final UserType userType;
+  final PageType pageType;
+
   @override
   Widget build(BuildContext context) {
-    double radiusSize = 30;
-    if (page == "home") radiusSize = 13;
+    /// 三項演算子を使うとよりスッキリかけます。
+    final radiusSize = pageType == PageType.home ? 13.0 : 30.0;
     return Stack(children: [
       Padding(
         padding: const EdgeInsets.all(5.0),
@@ -283,20 +320,20 @@ class Users extends StatelessWidget {
                 radius: radiusSize,
                 backgroundColor: Colors.blueGrey,
                 child: Text(
-                  user,
+                  userType.name,
                   style: const TextStyle(fontSize: 10),
                 ),
               ),
             ),
             const SizedBox(height: 5),
-            if (page == 'story') const Text('name')
+            if (pageType == PageType.story) const Text('name')
           ],
         ),
       ),
 
       //____________________________________________
       //ストーリーズ追加ボタン（自分）
-      if (user == 'honer') ...[
+      if (userType == UserType.honer) ...[
         const Positioned(
           top: 34,
           left: 37,
